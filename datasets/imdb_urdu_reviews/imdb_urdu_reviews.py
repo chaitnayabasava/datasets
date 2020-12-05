@@ -7,20 +7,31 @@ import csv
 
 import datasets
 
-
-_URL = {
-    "train": "https://github.com/urduhack/resources/releases/download/imdb_urdu_reviews_v1.0.0/imdb_urdu_reviews_train.csv",
-    "test" : "https://github.com/urduhack/resources/releases/download/imdb_urdu_reviews_v1.0.0/imdb_urdu_reviews_test.csv",
+_CITATION = """
+@InProceedings{maas-EtAl:2011:ACL-HLT2011,
+  author    = {Maas, Andrew L. and Daly,nRaymond E. and Pham, Peter T. and Huang, Dan and Ng, Andrew Y...},
+  title     = {Learning Word Vectors for Sentiment Analysis},
+  month     = {June},
+  year      = {2011},
+  address   = {Portland, Oregon, USA},
+  publisher = {Association for Computational Linguistics},
+  pages     = {142--150},
+  url       = {http://www.aclweb.org/anthology/P11-1015}
 }
+"""
 
 _DESCRIPTION = """
-To increase the availability of sentiment analysis dataset for a low recourse
-language like Urdu, the already available IMDB Dataset was
-translated using google translator into Urdu language.
+Large Movie translated Urdu Reviews Dataset.
+This is a dataset for binary sentiment classification containing substantially more data than previous
+benchmark datasets. We provide a set of 40,000 highly polar movie reviews for training, and 10,000 for testing.
+To increase the availability of sentiment analysis dataset for a low recourse language like Urdu,
+we opted to use the already available IMDB Dataset. we have translated this dataset using google translator.
 This is a binary classification dataset having two classes as positive and negative.
 The reason behind using this dataset is high polarity for each class.
 It contains 50k samples equally divided in two classes.
 """
+
+_URL = "https://www.dropbox.com/sh/1ivw7ykm2tugg94/AAAuAHMtbzhJUa4LeKoYoqmOa/MK-PUCIT%2010%20folds.zip?dl=0"
 
 _HOMEPAGE = "https://www.kaggle.com/akkefa/imdb-dataset-of-50k-movie-translated-urdu-reviews"
 
@@ -63,4 +74,4 @@ class Imdb(datasets.GeneratorBasedBuilder):
             for id_, row in enumerate(reader):
                 if id_ == 0:
                     continue
-                print(row)
+                yield id_, {"sentiment": row['sentiment'], "sentence": row['sentence']}
